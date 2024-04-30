@@ -121,6 +121,8 @@ class TestFileStorage(unittest.TestCase):
         storage.reload()
         state = {"name": "south"}
         new_state = State(**state)
+        storage.new(new_state)
+        storage.save()
         data_found = storage.get(State, new_state.id)
         self.assertEqual(new_state, data_found)
         for_none = storage.get(State, "none_id")
