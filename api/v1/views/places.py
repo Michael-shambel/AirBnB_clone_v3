@@ -23,8 +23,8 @@ def get_places_by_city(city_id):
 @app_views.route('/api/v1/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     place = storage.get(Place, place_id)
-        if place is None:
-            return abort(404)
+    if place is None:
+        return abort(404)
     return jsonify(place.to_dict())
 
 

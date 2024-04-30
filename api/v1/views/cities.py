@@ -11,6 +11,7 @@ from models import storage
 from models.state import State
 from models.city import City
 
+
 @app_views.route(
     '/states/<string:state_id>/cities',
     methods=['GET', 'POST'],
