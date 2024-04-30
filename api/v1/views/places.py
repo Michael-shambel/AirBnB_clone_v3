@@ -5,8 +5,7 @@ all default RESTFul API actions:
 """
 from flask import jsonify, request, abort
 from api.v1.views import app_views
-from api.v1.views import app_views
-from storage import models
+from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
