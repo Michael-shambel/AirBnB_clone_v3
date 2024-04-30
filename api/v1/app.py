@@ -2,7 +2,7 @@
 """
 it is time to start your API!
 """
-import os
+from os import getenv
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -27,6 +27,6 @@ def page_not_found(error):
 
 
 if __name__ == "__main__":
-    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
-    port = int(os.getenv('HBNB_API_PORT', 5000))
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(getenv('HBNB_API_PORT', 5000))
     app.run(host=host, port=port, threaded=True)
