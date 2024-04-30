@@ -16,13 +16,13 @@ def get_places_by_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
         return abort(404)
-    place = city.places
+    places = city.places
     return jsonify([place.to_dict() for place in places])
 
 
 @app_views.route('/api/v1/places/<place_id>', methods=['GET'])
 def get_place(place_id):
-    place = storage.get(Place, place_id):
+    place = storage.get(Place, place_id)
         if place is None:
             return abort(404)
     return jsonify(place.to_dict())
