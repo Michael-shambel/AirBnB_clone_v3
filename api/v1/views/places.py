@@ -11,7 +11,7 @@ from models.city import City
 from models.user import User
 
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
 def get_places_by_city(city_id):
     city = storage.get(City, city_id)
     if city is None:
@@ -20,7 +20,7 @@ def get_places_by_city(city_id):
     return jsonify([place.to_dict() for place in places])
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['GET'])
+@app_views.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
@@ -28,27 +28,28 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['DELETE'])
+@app_views.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     place =  storage.get(Place, place_id)
     if place is None:
         return abort(404)
-    place.delete()
+    storage.delete(place)
+    storage.save()
     return jsonify({}), 200
 
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=['POST'])
+@app_views.route('/cities/<city_id>/places', methods=['POST'])
 def create_place(city_id):
     city = storage.get(City, city_id)
     if city is None:
         return abort(404)
-    if not request.json:
+    if not request.get_json():
         return abort(400, 'Not a JSON')
-    if 'user_id' not in request.json:
+    if 'user_id' not in request.get_json():
         return abort(400, 'missing user_id')
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         return abort(400, 'Missing name')
-    user_id = request.json['user_id']
+    user_id = request.get_json['user_id']
     user = storage.get(User, user_id)
     if user is None:
         return abort(404)
@@ -59,7 +60,7 @@ def create_place(city_id):
     return jsonify(place.to_dict()), 201
 
 
-@app_views.route('/api/v1/places/<place_id>', methods=['PUT'])
+@app_views.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
