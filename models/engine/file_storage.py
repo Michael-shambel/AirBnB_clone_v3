@@ -85,7 +85,7 @@ class FileStorage:
             if cls in classes.values():
                 objs = self.all(cls)
                 return len(objs)
-           else:
-               return
+            else:
+                return
         else:
             return len(self.all())
