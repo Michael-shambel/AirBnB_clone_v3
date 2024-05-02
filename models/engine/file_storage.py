@@ -88,4 +88,7 @@ class FileStorage:
             else:
                 return
         else:
-            return len(self.all())
+            count = 0
+            for clss in classes.values():
+                count += self.__session.query(clss).count()
+            return count
