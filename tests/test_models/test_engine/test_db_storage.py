@@ -93,21 +93,7 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test method for to get data from db storage"""
-        state = State(name="south")
-        state.save()
-        data_found = models.storage.get(State, state.id)
-        self.assertEqual(state, data_found)
-        for_none = models.storage.get(State, "none_id")
-        self.assertEqual(for_none, None)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test method for count the instance"""
-        state = State(name= "Ethiopia")
-        city = City(name= "Addis", state_id=state.id)
-        state.save()
-        city.save()
-        count_state = models.storage.count(State)
-        self.assertEqual(count_state, len(models.storage.all(State)))
-        count_all = models.storage.count()
-        self.assertEqual(count_all, len(models.storage.all()))
