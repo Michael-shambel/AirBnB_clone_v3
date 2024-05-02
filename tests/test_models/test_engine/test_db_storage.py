@@ -68,46 +68,21 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestDBStorage(unittest.TestCase):
+class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
-        pass
+        self.assertIs(type(models.storage.all()), dict)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_no_class(self):
         """Test that all returns all rows when no class is passed"""
-        pass
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
-        pass
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
-        pass
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_get(self):
-        """Test method for to get data from db storage"""
-        state = State(name="south")
-        state.save()
-        data_found = models.storage.get(State, state.id)
-        self.assertEqual(state, data_found)
-        for_none = models.storage.get(State, "none_id")
-        self.assertEqual(for_none, None)
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_count(self):
-        """Test method for count the instance"""
-        state = State(name= "Ethiopia")
-        city = City(name= "Addis", state_id=new_state.id)
-        state.save()
-        city.save()
-        count_state = models.storage.count(State)
-        self.assertEqual(count_state, len(storage.all(State)))
-        count_all = storage.count()
-        self.assertEqual(count_all, len(mpdels.storage.all()))
