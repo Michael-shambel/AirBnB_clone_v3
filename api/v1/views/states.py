@@ -15,7 +15,7 @@ def get_all_states():
     return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route('/states/<string:state_id>', methods=['GET'],
+@app_views.route('/states/<state_id>', methods=['GET'],
                  strict_slashes=False)
 def get_state(state_id):
     """Retrieves a state object"""
@@ -39,7 +39,7 @@ def delete_state(state_id):
         return abort(404)
 
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """create a state"""
     data = request.get_json()
