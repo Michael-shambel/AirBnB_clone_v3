@@ -104,10 +104,10 @@ class TestDBStorage(unittest.TestCase):
     def test_count(self):
         """Test method for count the instance"""
         state = State(name= "Ethiopia")
-        city = City(name= "Addis", state_id=new_state.id)
+        city = City(name= "Addis", state_id=state.id)
         state.save()
         city.save()
         count_state = models.storage.count(State)
-        self.assertEqual(count_state, len(storage.all(State)))
-        count_all = storage.count()
-        self.assertEqual(count_all, len(mpdels.storage.all()))
+        self.assertEqual(count_state, len(models.storage.all(State)))
+        count_all = models.storage.count()
+        self.assertEqual(count_all, len(models.storage.all()))
