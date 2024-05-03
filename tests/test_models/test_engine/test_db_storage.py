@@ -90,30 +90,23 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_get(self):
         """Test method for to get data from db storage"""
-        storage = FileStorage()
-        storage.reload()
-        state = {"name": "south"}
-        new_state = State(**state)
-        storage.new(new_state)
-        storage.save()
-        data_found = storage.get(State, new_state.id)
-        self.assertEqual(new_state, data_found)
-        for_none = storage.get(State, "none_id")
-        self.assertEqual(for_none, None)
+        new_state = State(name="New York")
+        new_state.save()
+        new_user = User(email="bob@foobar.com", password="password")
+        new_user.save()
+        self.assertIs(new_state, models.storage.get("State", new_state.id))
+        self.assertIs(None, models.storage.get("State", "blah"))
+        self.assertIs(None, models.storage.get("blah", "blah"))
+        self.assertIs(new_user, models.storage.get("User", new_user.id))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_count(self):
         """Test method for count the instance"""
-        storage = FileStorage()
-        storage.reload()
-        state = {"name": "Ethiopia"}
-        new_state = State(**state)
-        storage.new(new_state)
-        city = {"name": "Addis", "state_id": new_state.id}
-        new_city = City(**city)
-        storage.new(new_city)
-        storage.save()
-        count_state = storage.count(State)
-        self.assertEqual(count_state, len(storage.all(State)))
-        count_all = storage.count()
-        self.assertEqual(count_all, len(storage.all()))
+        initial_count = models.storage.count()
+        self.assertEqual(models.storage.count("Blah"), 0)
+        new_state = State(name="Florida")
+        new_state.save()
+        new_user = User(email="bob@foobar.com", password="password")
+        new_user.save()
+        self.assertEqual(models.storage.count("State"), initial_count + 1)
+        self.assertEqual(models.storage.count(), initial_count + 2)
